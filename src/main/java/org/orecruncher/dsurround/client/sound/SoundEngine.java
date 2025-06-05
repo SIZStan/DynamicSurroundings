@@ -100,6 +100,9 @@ public final class SoundEngine {
 	private static final float MUTE_VOLUME = 0.00001F;
 	private static final int MAX_STREAM_CHANNELS = 16;
 	private static final int SOUND_QUEUE_SLACK = 6;
+	
+	// 添加最大音量限制配置，默认为16.0F以支持远距离音效
+	private static final float MAX_VOLUME_LIMIT = 16.0F;
 
 	// Maximum number of sound channels configured in the sound system
 	private static int maxSounds = 0;
@@ -234,7 +237,7 @@ public final class SoundEngine {
 					this.queuedSounds.add(sound);
 					sound.setState(SoundState.PLAYING);
 				}
-			} catch (@Nonnull final Throwable t) {
+			} catch (final Throwable t) {
 				final String txt = String.format("Unable to play sound [%s]", sound);
 				ModBase.log().error(txt, t);
 			}
@@ -447,7 +450,8 @@ public final class SoundEngine {
 	public static float getClampedVolume(@Nonnull final ISound sound) {
 		final float volumeScale = getVolumeScale(sound);
 		final float volume = sound.getVolume() * getVolume(sound.getCategory()) * volumeScale;
-		return MathStuff.clamp(volume, 0.0F, 1.0F);
+		// 使用更高的音量上限来支持远距离音效播放
+		return MathStuff.clamp(volume, 0.0F, MAX_VOLUME_LIMIT);
 	}
 
 	private static void alErrorCheck() {

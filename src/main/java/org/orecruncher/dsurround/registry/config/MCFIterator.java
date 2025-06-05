@@ -60,7 +60,7 @@ class MCFIterator implements Iterator<ModConfiguration>, Closeable {
 	public boolean hasNext() {
 		try {
 			return this.reader.hasNext();
-		} catch (@Nonnull final IOException ex) {
+		} catch (final IOException ex) {
 			ModBase.log().error("Unable to read from memory!", ex);
 		}
 		return false;
@@ -76,7 +76,7 @@ class MCFIterator implements Iterator<ModConfiguration>, Closeable {
 			final ModConfiguration mcf = this.gson.fromJson(this.reader, ModConfiguration.class);
 			mcf.source = source;
 			return mcf;
-		} catch (@Nonnull final JsonSyntaxException | JsonIOException ex) {
+		} catch (final JsonSyntaxException | JsonIOException ex) {
 			ModBase.log().error(source != null ? source : "Unable to parse Json from memory!", ex);
 			return null;
 		}

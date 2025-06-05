@@ -49,7 +49,7 @@ class FacadeAccessor implements IFacadeAccessor {
 		try {
 			this.IFacadeClass = Class.forName(clazz);
 			this.accessor = getMethod(method);
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			this.IFacadeClass = null;
 			this.accessor = null;
 		}
@@ -79,7 +79,7 @@ class FacadeAccessor implements IFacadeAccessor {
 			try {
 				if (instanceOf(state.getBlock()))
 					return call(state, world, new BlockPos(pos), side);
-			} catch (@Nonnull final Throwable ex) {
+			} catch (final Throwable ex) {
 				ModBase.log().catching(ex);
 				this.IFacadeClass = null;
 				this.accessor = null;

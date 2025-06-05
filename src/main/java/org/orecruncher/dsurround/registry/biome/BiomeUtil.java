@@ -186,7 +186,7 @@ public final class BiomeUtil {
 		// case. Seen this with OTG installed.
 		try {
 			return new ReferenceOpenHashSet<>(BiomeDictionary.getTypes(biome));
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			final String name = biomeName.get(biome);
 			ModBase.log().warn("Unable to get biome type data for biome '%s'", name);
 		}

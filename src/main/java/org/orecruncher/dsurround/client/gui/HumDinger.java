@@ -73,7 +73,7 @@ public final class HumDinger {
 						try {
 							final SoundInstance snd = SoundBuilder.create(se, SoundCategory.MASTER);
 							SoundEngine.instance().playSound(snd);
-						} catch (@Nonnull final Throwable t) {
+						} catch (final Throwable t) {
 							ModBase.log().error("Error executing ding", t);
 						}
 					});

@@ -33,6 +33,9 @@ public final class ModInfo {
 	public static final String MINECRAFT_VERSIONS = "[1.12.2,)";
 	public static final String GUI_FACTORY = "org.orecruncher.dsurround.client.gui.ConfigGuiFactory";
 	public static final String REMOTE_VERSIONS = "*";
+	
+	// 音效距离修改版本标识
+	public static final String IS_DISTANCE_VERSION = "true";
 
 	//@formatter:off
 	public static final String DEPENDENCIES =

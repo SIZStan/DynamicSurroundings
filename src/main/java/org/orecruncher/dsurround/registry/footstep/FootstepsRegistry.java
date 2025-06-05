@@ -364,7 +364,7 @@ public final class FootstepsRegistry extends Registry {
 							@SuppressWarnings("deprecation")
 							final IBlockState state = block.getStateFromMeta(meta);
 							blockName = state.toString();
-						} catch (@Nonnull final Throwable t) {
+						} catch (final Throwable t) {
 							ModBase.log().warn("Unable to resolve blockstate for [%s]",
 									ItemStackUtil.getItemName(stack));
 						}

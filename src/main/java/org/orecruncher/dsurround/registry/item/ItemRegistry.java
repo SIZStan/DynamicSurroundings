@@ -172,7 +172,7 @@ public final class ItemRegistry extends Registry {
 						// we want that class.
 						final Class<?> clazz = Class.forName(c, false, ItemRegistry.class.getClassLoader());
 						theList.add(clazz);
-					} catch (@Nonnull final ClassNotFoundException e) {
+					} catch (final ClassNotFoundException e) {
 						ModBase.log().warn("Cannot locate class '%s' for ItemRegistry", c);
 					}
 				} else {

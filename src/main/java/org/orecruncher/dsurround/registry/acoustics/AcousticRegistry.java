@@ -159,7 +159,7 @@ public class AcousticRegistry extends Registry {
 				final EventSelectorAcoustics selector = new EventSelectorAcoustics(acousticsName);
 				parseSelector(selector, acousticsDefinition);
 				addAcoustic(selector);
-			} catch (@Nonnull final Throwable t) {
+			} catch (final Throwable t) {
 				final String msg = String.format("Unable to parse Json entry [%s]!", acousticsName);
 				ModBase.log().error(msg, t);
 			}

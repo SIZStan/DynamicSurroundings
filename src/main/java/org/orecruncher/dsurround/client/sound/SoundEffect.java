@@ -192,7 +192,11 @@ public final class SoundEffect implements ISpecialEffect, IEntrySource<SoundEffe
 
 	@SideOnly(Side.CLIENT)
 	public SoundInstance createSoundAt(@Nonnull final BlockPos pos) {
-		return SoundBuilder.builder(this.sound, SoundRegistry.BIOME).setPosition(pos).build();
+		return SoundBuilder.builder(this.sound, SoundRegistry.BIOME)
+			.setPosition(pos)
+			.setVolume(this.volume)
+			.setPitch(this.getPitch(RANDOM))
+			.build();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -200,7 +204,11 @@ public final class SoundEffect implements ISpecialEffect, IEntrySource<SoundEffe
 		final float posX = (float) (player.posX + randomRange(SPOT_SOUND_RANGE));
 		final float posY = (float) (player.posY + player.getEyeHeight() + randomRange(SPOT_SOUND_RANGE));
 		final float posZ = (float) (player.posZ + randomRange(SPOT_SOUND_RANGE));
-		return SoundBuilder.builder(this.sound, SoundRegistry.BIOME).setPosition(posX, posY, posZ).build();
+		return SoundBuilder.builder(this.sound, SoundRegistry.BIOME)
+			.setPosition(posX, posY, posZ)
+			.setVolume(this.volume)
+			.setPitch(this.getPitch(RANDOM))
+			.build();
 	}
 
 	@SideOnly(Side.CLIENT)

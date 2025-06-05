@@ -95,7 +95,7 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 			out.write('"');
 			out.write(txt);
 			out.write("\",");
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error("Really??", t);
 		}
 	}
@@ -104,7 +104,7 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 	protected static void appendComma(@Nonnull final OutputStreamWriter out) {
 		try {
 			out.write(',');
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error("Really??", t);
 		}
 	}
@@ -120,7 +120,7 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 				if (!StringUtils.isEmpty(s))
 					out.write(s);
 			}
-		} catch (@Nonnull final IOException e) {
+		} catch (final IOException e) {
 			ModBase.log().error("Huh?", e);
 		}
 	}
@@ -152,9 +152,9 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 				ModBase.log().debug("Loaded %s", text);
 				return true;
 			}
-		} catch (@Nonnull final JsonSyntaxException | MalformedJsonException vf) {
+		} catch (final JsonSyntaxException | MalformedJsonException vf) {
 			ModBase.log().warn("Json validation failed for %s: %s", text, vf.getMessage());
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error(text, t);
 		}
 		return comma;
@@ -169,11 +169,11 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 			if (is != null) {
 				try (final InputStreamReader stream = new InputStreamReader(is)) {
 					return copy(stream, output, text, comma);
-				} catch (@Nonnull final Throwable t) {
+				} catch (final Throwable t) {
 					ModBase.log().error(rl.toString(), t);
 				}
 			}
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error(rl.toString(), t);
 		}
 		return comma;
@@ -225,7 +225,7 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 			for (final ProfileScript script : resources) {
 				try (final InputStreamReader reader = new InputStreamReader(script.stream)) {
 					prependComma = copy(reader, output, script.packName, prependComma);
-				} catch (@Nonnull final Throwable t) {
+				} catch (final Throwable t) {
 					ModBase.log().error("Error reading profile script", t);
 				}
 			}
@@ -253,7 +253,7 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 			output.write("]");
 			output.flush();
 
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error("Something went horribly wrong", t);
 		}
 
@@ -268,7 +268,7 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 	public Iterator<ModConfiguration> iterator() {
 		try {
 			return new MCFIterator(this.crunchyBits);
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error("Unable to create ModConfiguration iterator", t);
 			return new Iterator<ModConfiguration>() {
 				@Override
@@ -296,7 +296,7 @@ public final class ConfigData implements Iterable<ModConfiguration> {
 				}
 			}
 
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error("Error dumping bytes!", t);
 		}
 

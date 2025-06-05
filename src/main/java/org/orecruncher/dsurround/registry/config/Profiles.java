@@ -52,7 +52,7 @@ public class Profiles {
 		final String index = PROFILE_PATH + "_index.json";
 		try {
 			profiles = JsonUtils.loadFromJar(Profiles.class, index);
-		} catch (@Nonnull final Throwable ignore) {
+		} catch (final Throwable ignore) {
 		}
 	}
 

@@ -188,7 +188,7 @@ public class InspectionHUD extends Gui implements IGuiOverlay {
 
 			text.add(TextFormatting.GOLD + "Effects");
 			text.addAll(((FxHandler) EffectManager.instance().lookupService(FxHandler.class)).getEffects(entity));
-		} catch (@Nonnull final Exception ex) {
+		} catch (final Exception ex) {
 			text.add(TextFormatting.RED + "!! ERROR !!");
 		}
 	}

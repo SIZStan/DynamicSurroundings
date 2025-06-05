@@ -77,7 +77,7 @@ public class ConstructArmoryProducer implements IItemDataProducer {
 			this.chestplate = Class.forName("c4.conarm.common.items.armor.Chestplate");
 			this.leggings = Class.forName("c4.conarm.common.items.armor.Leggings");
 			this.boots = Class.forName("c4.conarm.common.items.armor.Boots");
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			ModBase.log().error("Unable to initialize Construct Armory producer!", t);
 			this.helmet = null;
 			this.chestplate = null;

@@ -130,7 +130,7 @@ public enum BlockEffectType {
 		try {
 			if (clazz != null)
 				this.factory = clazz.getConstructor(int.class);
-		} catch (@Nonnull final Throwable ignore) {
+		} catch (final Throwable ignore) {
 		}
 	}
 

@@ -94,7 +94,7 @@ public final class ResourcePacks {
 		public boolean resourceExists(@Nonnull final ResourceLocation loc) {
 			try (final InputStream stream = getInputStream(loc)) {
 				return stream != null;
-			} catch (@Nonnull final Throwable ignore) {
+			} catch (final Throwable ignore) {
 			}
 			return false;
 		}

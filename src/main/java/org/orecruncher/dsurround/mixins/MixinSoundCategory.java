@@ -59,7 +59,7 @@ public abstract class MixinSoundCategory {
 				final Map<String, SoundCategory> theMap = (Map<String, SoundCategory>) f.get(null);
 				theMap.put(fs.getName(), fs);
 				theMap.put(b.getName(), b);
-			} catch (@Nonnull final Throwable ignore) {
+			} catch (final Throwable ignore) {
 			}
 		}
 	}

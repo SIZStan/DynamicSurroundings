@@ -68,7 +68,7 @@ public final class SoundRegistry extends Registry {
 	public static final SoundCategory BIOME = SoundCategory.valueOf("DS_BIOME");
 
 	public static final float MIN_SOUNDFACTOR = 0F;
-	public static final float MAX_SOUNDFACTOR = 4F;
+	public static final float MAX_SOUNDFACTOR = 16F;
 	public static final float DEFAULT_SOUNDFACTOR = 1F;
 
 	private final Set<ResourceLocation> blockedSounds = new ObjectOpenHashSet<>(32);
@@ -152,7 +152,7 @@ public final class SoundRegistry extends Registry {
 				final ResourceLocation resource = new ResourceLocation(ModInfo.RESOURCE_ID, sound);
 				this.soundMetadata.put(resource, data);
 			});
-		} catch (@Nonnull final Exception ex) {
+		} catch (final Exception ex) {
 			ex.printStackTrace();
 		}
 
