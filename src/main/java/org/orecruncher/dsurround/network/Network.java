@@ -114,7 +114,7 @@ public final class Network {
 					ModBase.log().info("Player [%s] connected with %s %s", p.getDisplayNameString(), ModInfo.MOD_NAME,
 							version);
 				}
-			} catch (@Nonnull final Throwable t) {
+			} catch (final Throwable t) {
 				t.printStackTrace();
 			}
 		}
@@ -131,7 +131,7 @@ public final class Network {
 				synchronized (blockList) {
 					blockList.remove(p.getPersistentID());
 				}
-			} catch (@Nonnull final Throwable t) {
+			} catch (final Throwable t) {
 				t.printStackTrace();
 			}
 		}
@@ -144,7 +144,7 @@ public final class Network {
 			synchronized (blockList) {
 				blockList.remove(event.player.getPersistentID());
 			}
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			t.printStackTrace();
 		}
 	}
@@ -180,7 +180,7 @@ public final class Network {
 			synchronized (blockList) {
 				return strm.map(p -> (EntityPlayerMP) p).collect(Collectors.toList());
 			}
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			t.printStackTrace();
 			return EmptyList.empty();
 		}
@@ -197,7 +197,7 @@ public final class Network {
 			synchronized (NETWORK) {
 				NETWORK.sendTo(msg, player);
 			}
-		} catch (@Nonnull final Throwable t) {
+		} catch (final Throwable t) {
 			t.printStackTrace();
 		}
 	}
