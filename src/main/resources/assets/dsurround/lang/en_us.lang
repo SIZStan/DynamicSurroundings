@@ -1,3 +1,7 @@
+dsurround.cfg.effects.PopoffRange=Popoff Range
+dsurround.cfg.effects.PopoffTextStyle=Popoff Text Style
+dsurround.cfg.effects.DamageColorTag=Damage Color NBT Tag
+dsurround.cfg.effects.DamageColorAliases=Damage Color Aliases
 #PARSE_ESCAPES
 # US English Translations
 dsurround.msg.dsurround=Dynamic Surroundings

@@ -359,6 +359,13 @@ public final class ModOptions {
 		@Comment("Block radius/range around player for special effect application")
 		public static int specialEffectRange = 24;
 
+		@Option("Popoff Range")
+		@DefaultValue("32")
+		@LangKey(effects.PREFIX + ".PopoffRange")
+		@RangeInt(min = 16, max = 128)
+		@Comment("Block radius/range for damage/heal popoff visibility; used with FXRange as the max")
+		public static int popoffRange = 32;
+
 		@Option("Disable Water Suspend Particles")
 		@DefaultValue("false")
 		@LangKey(effects.PREFIX + ".Suspend")
@@ -426,6 +433,25 @@ public final class ModOptions {
 		@LangKey(effects.PREFIX + ".CritWords")
 		@Comment("Display random power word on critical hit")
 		public static boolean showCritWords = true;
+
+		@Option("Popoff Text Style")
+		@DefaultValue("0")
+		@LangKey(effects.PREFIX + ".PopoffTextStyle")
+		@RangeInt(min = 0, max = 2)
+		@Comment("Style of damage/heal text popoff: 0=grow-shrink, 1=float-fade, 2=bounce-strong")
+		public static int popoffTextStyle = 0;
+
+		@Option("Damage Color NBT Tag")
+		@DefaultValue("damagacolor")
+		@LangKey(effects.PREFIX + ".DamageColorTag")
+		@Comment("NBT tag name on entity to override damage text color, e.g., 'damagacolor'")
+		public static String damageColorTagName = "damagacolor";
+
+		@Option("Damage Color Aliases")
+		@DefaultValue("")
+		@LangKey(effects.PREFIX + ".DamageColorAliases")
+		@Comment("Alias list for mapping NBT tag values to colors, format 'alias=COLOR_KEY'. Example: red=MC_RED,红色=MC_RED")
+		public static String[] damageColorAliases = {};
 
 		@Option("Footprints")
 		@DefaultValue("true")

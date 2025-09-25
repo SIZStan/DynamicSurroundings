@@ -48,11 +48,20 @@ public class ParticleTextPopOff extends ParticleBase {
 	protected static final int SHADOW_COLOR = Color.BLACK.rgbWithAlpha(1F);
 
 	protected int renderColor = Color.WHITE.rgbWithAlpha(1F);
+	protected Color baseColor = Color.WHITE;
 	protected boolean grow = true;
 
 	protected String text;
 	protected float drawX;
 	protected float drawY;
+
+	public enum Style {
+		GROW_SHRINK,
+		FLOAT_FADE,
+		BOUNCE_STRONG
+	}
+
+	protected Style style = Style.GROW_SHRINK;
 
 	public ParticleTextPopOff(final World world, final String text, final Color color, final double x, final double y,
 			final double z) {
@@ -63,6 +72,7 @@ public class ParticleTextPopOff extends ParticleBase {
 			final double z, final double dX, final double dY, final double dZ) {
 		super(world, x, y, z, dX, dY, dZ);
 
+		this.baseColor = color;
 		this.renderColor = color.rgbWithAlpha(1F);
 		this.motionX = dX;
 		this.motionY = dY;
@@ -81,6 +91,11 @@ public class ParticleTextPopOff extends ParticleBase {
 		setText(text);
 	}
 
+	public ParticleTextPopOff setStyle(@Nonnull final Style style) {
+		this.style = style;
+		return this;
+	}
+
 	public ParticleTextPopOff setText(@Nonnull final String text) {
 		this.text = text;
 		this.drawX = -MathHelper.floor(this.font.getStringWidth(this.text) / 2.0F) + 1;
@@ -89,6 +104,7 @@ public class ParticleTextPopOff extends ParticleBase {
 	}
 
 	public ParticleTextPopOff setColor(@Nonnull final Color color) {
+		this.baseColor = color;
 		this.renderColor = color.rgbWithAlpha(1F);
 		return this;
 	}
@@ -109,22 +125,69 @@ public class ParticleTextPopOff extends ParticleBase {
 		GlStateManager.rotate(yaw, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
 		GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-		GlStateManager.scale(this.particleScale * 0.008D, this.particleScale * 0.008D, this.particleScale * 0.008D);
+		// 根据距离做缩放，使视觉大小基本保持一致
+		final float distToCam = MathHelper.sqrt(locX * locX + locY * locY + locZ * locZ);
+		final double targetDist = 16.0D; // 参考距离（可按需微调）
+		final double distanceScale = MathHelper.clamp(distToCam / (float) targetDist, 1.0F, 4.0F);
+		final double renderScale = this.particleScale * 0.008D * distanceScale;
+		GlStateManager.scale(renderScale, renderScale, renderScale);
+
+		// 禁用深度测试，确保绘制在所有实体和方块之上
+		GlStateManager.disableDepth();
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 0.003662109F);
 		this.font.drawString(this.text, this.drawX, this.drawY, SHADOW_COLOR, false);
 		GlStateManager.translate(-0.3F, -0.3F, -0.001F);
 		this.font.drawString(this.text, this.drawX, this.drawY, this.renderColor, false);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX,
 				OpenGlHelper.lastBrightnessY);
+		GlStateManager.enableDepth();
 		OpenGlState.pop(glState);
 
-		if (this.grow) {
-			this.particleScale *= 1.08F;
-			if (this.particleScale > SIZE * 3.0D) {
-				this.grow = false;
-			}
-		} else {
-			this.particleScale *= 0.96F;
+		switch (this.style) {
+			case GROW_SHRINK:
+				if (this.grow) {
+					this.particleScale *= 1.08F;
+					if (this.particleScale > SIZE * 3.0D) {
+						this.grow = false;
+					}
+				} else {
+					this.particleScale *= 0.96F;
+				}
+				break;
+				case FLOAT_FADE: {
+					final int age = this.particleAge;
+					final int max = this.particleMaxAge;
+					final float t = max > 0 ? age / (float) max : 0F;
+					// Phase 1: quicker pop-in (0% - 15%), lower vertical motion, no gravity
+					if (t < 0.15F) {
+						final float k = t / 0.15F; // 0 -> 1
+						this.particleScale = SIZE * (1.0F + k * 1.0F); // up to ~2.0x，前期更快
+						this.renderColor = this.baseColor.rgbWithAlpha(1F);
+						// keep height low early, but ensure upward movement
+						this.particleGravity = 0.0F;
+						if (this.motionY < 0.004D) this.motionY = 0.004D;
+					} else if (t < 0.7F) {
+						// Phase 2: longer hold (15% - 70%), light gravity, slight upward drift
+						this.particleScale = SIZE * 2.0F;
+						this.renderColor = this.baseColor.rgbWithAlpha(1F);
+						this.particleGravity = 0.1F;
+						if (this.motionY < 0.002D) this.motionY = 0.002D;
+					} else {
+						// Phase 3: rise quickly, shrink and fade (70% - 100%)
+						this.particleGravity = 0.3F;
+						this.motionY += 0.02D;
+						this.particleScale *= 0.94F;
+						final float k = (t - 0.7F) / 0.3F; // 0 -> 1 over the last 30%
+						final float a = Math.max(0.0F, 1.0F - k);
+						this.renderColor = this.baseColor.rgbWithAlpha(a);
+					}
+					break;
+				}
+			case BOUNCE_STRONG:
+				this.motionY += 0.012D;
+				this.particleScale *= this.grow ? 1.12F : 0.94F;
+				if (this.particleScale > SIZE * 3.5D) this.grow = false;
+				break;
 		}
 	}
 

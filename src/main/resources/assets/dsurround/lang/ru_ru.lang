@@ -1,3 +1,7 @@
+dsurround.cfg.effects.PopoffRange=Дальность всплывающих чисел
+dsurround.cfg.effects.PopoffTextStyle=Стиль всплывающего текста
+dsurround.cfg.effects.DamageColorTag=NBT-тег цвета урона
+dsurround.cfg.effects.DamageColorAliases=Псевдонимы цветов урона
 #PARSE_ESCAPES
 # RU Russian Translations
 dsurround.msg.dsurround=Dynamic Surroundings

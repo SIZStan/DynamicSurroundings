@@ -141,8 +141,10 @@ public class FxHandler extends EffectHandlerBase {
 		final long start = System.nanoTime();
 		final IEntityFX cap = CapabilityEntityFXData.getCapability(entity);
 		if (cap != null) {
-			final double distanceThreshold = ModOptions.effects.specialEffectRange
-					* ModOptions.effects.specialEffectRange;
+			final int fxR = ModOptions.effects.specialEffectRange;
+			final int poR = ModOptions.effects.popoffRange;
+			final int usedR = Math.max(fxR, poR);
+			final double distanceThreshold = usedR * (double) usedR;
 			final boolean inRange = entity.getDistanceSq(EnvironState.getPlayer()) <= distanceThreshold;
 			final EntityEffectHandler handler = cap.get();
 			if (handler != null && !inRange) {
